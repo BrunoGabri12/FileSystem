@@ -1,4 +1,4 @@
-package src.diskSimulator;
+package src.operators;
 import java.util.HashMap;
 
 public class FileType {

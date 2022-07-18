@@ -3,17 +3,10 @@ package src.diskManagement;
 import java.io.FileOutputStream;
 import java.time.Instant;
 
-import src.diskManagement.exceptions.InvalidEntryException;
-import src.diskManagement.exceptions.InvalidSNodeException;
-import src.diskManagement.interfaces.FileManagementInterface;
-import src.diskManagement.interfaces.VirtualDiskInspectionInterface;
-import src.diskSimulator.BitMap;
-import src.diskSimulator.DBlock;
-import src.diskSimulator.DEntry;
-import src.diskSimulator.FileType;
-import src.diskSimulator.SNode;
-import src.diskSimulator.SNodeDir;
-import src.diskSimulator.FileType;
+import src.diskManagement.exceptions.*;
+import src.diskManagement.interfaces.*;
+import src.diskSimulator.*;
+import src.operators.*;
 import virtualDisk.virtualDisk;
 
 //classe que implementa o gerenciador de disco 
@@ -30,6 +23,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     private BitMap bitMap1;
     private BitMap bitMap2;
 
+    private LimitDictionary size = new LimitDictionary();
 
     /*
      * como não temos comando para alteração de tamanho de arquivo, os arquivos serão adicionados de forma sequencial.
@@ -52,7 +46,9 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     }
 
     
-    //criação do root do disco 
+
+
+    //Método que realiza a criação do Root  
     private boolean createRootDisk(){ //instanciação do root 
 
         try{
@@ -84,7 +80,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     //criação do disco 
     private boolean createDisk(){
     
-        if((maxFile%8 != 0 || maxDir%8 != 0) || (maxFile<limits.getMinFilePerBlocks() || maxFile>limits.getMaxFilePerBlocks()) || (maxDir<limits.getMinFilePerBlocks() && maxDir>limits.getMaxFilePerBlocks())){ //verificação se os valores estabelecem o critério de criação S 
+        if((maxFile%8 != 0 || maxDir%8 != 0) || (maxFile<size.get("MinFilePerBlocks")) || maxFile>size.get("MaxFilePerBlocks") || (maxDir<size.get("MinFilePerBlocks")) && maxDir>size.get("MaxFilePerBlocks")){ //verificação se os valores estabelecem o critério de criação S 
             return false; 
         }
         else {
@@ -104,22 +100,32 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
     @Override
     public boolean addDirectory(String pathname, String filename) throws InvalidEntryException, VirtualFileNotFoundException {
-        long millis = Instant.now().toEpochMilli();  //criação do root
+        long millis = Instant.now().toEpochMilli();  //data de criação do arquivo 
         SNodeDir Directory = new SNodeDir(type.get("Directory"), (byte)0 , millis, millis, (short)0); //criação de um novo diretório 
 
         
         //primeiro temos que realizar uma busca para saber em que diretório será adicionado
         //depois precisamos buscar um espaço na memória para armazenar o diretório -> irá buscar no BitMap 
 
-        if(pathname == "/"){ //significa que o caminho é a raiz
 
+        return false;
+    }
+
+    //realiza a busca para a inserção de um elemento no diretório 
+    public int[] searchInDisk(String pathname){
+
+        
+        if(pathname == "/"){ //significa que o caminho é a raiz
+            byte positionRoot = VD.getElement(0,size.get("SNodeIdentifier"));
+            
         }
         else { //tera que realizar a busca pela memória 
             //começa pelo Root, busca o elemento que ela está buscando, acessa tal elemento e assim por diante até chegar na posição do DEntry. 
             //adiciona o file/directory na posição e atualiza o DEntry do diretório associado 
         }
 
-        return false;
+        return null;
+        
     }
 
     @Override
@@ -172,9 +178,9 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
 
     @Override
-    public boolean addFile(String pathname, String filename, src.diskManagement.interfaces.FileType type, int length)
+    public boolean addFile(String pathname, String filename, src.src.operators.FileType type, int length)
             throws src.src.diskManagement.exceptions.InvalidEntryException,
-            src.diskManagement.interfaces.VirtualFileNotFoundException {
+            src.src.diskManagement.exceptions.VirtualFileNotFoundException {
         // TODO Auto-generated method stub
         return false;
     } 

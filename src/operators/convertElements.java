@@ -1,4 +1,4 @@
-package src.diskSimulator;
+package src.operators;
 
 public class convertElements {
 
@@ -26,5 +26,7 @@ public class convertElements {
 
           return valueinByte;
     }
+
+
 
 }

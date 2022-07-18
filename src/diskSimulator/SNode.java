@@ -1,5 +1,5 @@
 package src.diskSimulator;
-import src.diskSimulator.convertElements;
+import src.operators.convertElements;
 
 public class SNode{
     // tamanho fixo de 28 bytes em disco

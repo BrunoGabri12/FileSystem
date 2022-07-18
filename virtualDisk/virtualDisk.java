@@ -17,7 +17,6 @@ public class virtualDisk {
         }
 
     }
-
     public void insertNode(int positionI, byte element[]){
         if( positionI > 0 && (positionI+element.length<VD.length)  && element.length!=0 ){
 
@@ -30,5 +29,9 @@ public class virtualDisk {
             System.out.println("Inserção Inválida");
         }
 
+    }
+
+    public byte getElement(int positionI){
+        return VD[positionI];
     }
 }

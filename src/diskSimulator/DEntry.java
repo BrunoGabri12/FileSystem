@@ -1,5 +1,5 @@
 package src.diskSimulator;
-import src.diskSimulator.convertElements;
+import src.operators.convertElements;
 
 public class DEntry {
     
