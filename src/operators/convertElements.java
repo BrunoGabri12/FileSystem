@@ -27,6 +27,10 @@ public class convertElements {
           return valueinByte;
     }
 
+    public short convertByteToShort(byte[] value){
+
+        return   (short) (value[0]<<8 | value[1] & 0xFF);
+    }
 
 
 }

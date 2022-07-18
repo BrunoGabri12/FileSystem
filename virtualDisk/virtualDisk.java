@@ -31,7 +31,15 @@ public class virtualDisk {
 
     }
 
-    public byte getElement(int positionI){
-        return VD[positionI];
+    public byte[] getElement(int position, int size_element){
+
+        byte[] element = new byte[size_element];
+        
+        for(int i = position, j = 0; i<size_element; i ++, j++){
+            element[j] = VD[i];
+        }
+
+
+        return element;
     }
 }

@@ -15,7 +15,7 @@ public class SNode{
     protected short DataBlock_03;
     protected short DataBlock_04;
 
-    private DBlock DataBlockVetor[]; //vetor de dados 
+    
     
     //construtor da classe 
     public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short Length, short DataBlock_01, short DataBlock_02, short DataBlock_03, short DataBlock_04){
@@ -29,17 +29,7 @@ public class SNode{
         this.DataBlock_03= DataBlock_03; 
         this.DataBlock_04= DataBlock_04;
 
-        switch(Length){ //alocação dos espaços para o arquivo 
-            case 128:
-                DataBlockVetor = new DBlock[1];
-            case 256:
-                DataBlockVetor = new DBlock[2];
-            case 384:
-                DataBlockVetor = new DBlock[3];
-            case 512:
-                DataBlockVetor = new DBlock[4];
-        }
-        
+    
     }
 
 

@@ -25,6 +25,8 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
     private LimitDictionary size = new LimitDictionary();
 
+    private convertElements operator;
+
     /*
      * como não temos comando para alteração de tamanho de arquivo, os arquivos serão adicionados de forma sequencial.
      * Na hora de removermos eles, eles apenas serão deletados do map de bits 
@@ -112,19 +114,34 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     }
 
     //realiza a busca para a inserção de um elemento no diretório 
-    public int[] searchInDisk(String pathname){
+    public int searchInDisk(String pathname){
 
         
         if(pathname == "/"){ //significa que o caminho é a raiz
-            byte positionRoot = VD.getElement(0,size.get("SNodeIdentifier"));
-            
+            long positionRoot = operator.convertByteToShort(VD.getElement(0,size.get("SNodeIdentifier"))); //apontador para o Snode do root
+            long positionDataBlock = operator.convertByteToShort(VD.getElement((int)(positionRoot + 21),size.get("Data_Block"))); //apontador para os dados do root 
+
+            if(VD.getElement((int)positionDataBlock,1)[0] != 0){
+                while(VD.getElement((int)positionDataBlock,1)[0] != 0){
+                    positionDataBlock++; //irá buscar no DEntry o primeiro espaço disponível 
+                }
+            }
+
+            return (int)positionDataBlock;
         }
-        else { //tera que realizar a busca pela memória 
+        else { 
+            
+            
+            
+            
+            
+            
+            //tera que realizar a busca pela memória 
             //começa pelo Root, busca o elemento que ela está buscando, acessa tal elemento e assim por diante até chegar na posição do DEntry. 
             //adiciona o file/directory na posição e atualiza o DEntry do diretório associado 
         }
 
-        return null;
+        return 0;
         
     }
 

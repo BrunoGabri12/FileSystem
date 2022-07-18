@@ -1,4 +1,4 @@
-package src.diskManagement;
+package src.diskManagement.exceptions;
 
 public class VirtualFileNotFoundException {
 
