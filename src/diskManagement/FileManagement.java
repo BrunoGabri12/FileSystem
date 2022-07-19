@@ -53,27 +53,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     //Método que realiza a criação do Root  
     private boolean createRootDisk(){ //instanciação do root 
 
-        try{
-
-            long millis = Instant.now().toEpochMilli();  //criação do root
-            SNode root= new SNodeDir(type.get("Directory"),(byte)0, millis, millis, (short)0);
-            DBlock blockRoot = new DBlock();
-
-            String namefile = new String("/");
-            //DEntry para a Root
-            DEntry DEntryRoot = new DEntry((short)17,(short)16, type.get("Directory"),(byte)1, namefile.getBytes());
-
-            
-            VD.insertNode(17, root.convertSNodeInBytes()); //estrutura principal da memória  
-            VD.insertNode(45,bitMap1.getBitMap());
-            VD.insertNode(46,blockRoot.getBlock());
-            VD.insertNode(174, bitMap2.getBitMap()); //insere os bitmaps 
-
-            return true;
-            
-        } catch(Exception IO){ 
-            return false; 
-        }
+   
 
     
     }
@@ -86,7 +66,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
             return false; 
         }
         else {
-           try{ //criação do arquivo binário que simula o disco 
+           try{ //criação +do arquivo binário que simula o disco 
               this.diskFile = new FileOutputStream("../disk/"+this.NameOfDisk+".dat");
               return true;
             } catch(Exception e){ //disco não foi criado com exito 
@@ -113,37 +93,8 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         return false;
     }
 
-    //realiza a busca para a inserção de um elemento no diretório 
-    public int searchInDisk(String pathname){
 
-        
-        if(pathname == "/"){ //significa que o caminho é a raiz
-            long positionRoot = operator.convertByteToShort(VD.getElement(0,size.get("SNodeIdentifier"))); //apontador para o Snode do root
-            long positionDataBlock = operator.convertByteToShort(VD.getElement((int)(positionRoot + 21),size.get("Data_Block"))); //apontador para os dados do root 
 
-            if(VD.getElement((int)positionDataBlock,1)[0] != 0){
-                while(VD.getElement((int)positionDataBlock,1)[0] != 0){
-                    positionDataBlock++; //irá buscar no DEntry o primeiro espaço disponível 
-                }
-            }
-
-            return (int)positionDataBlock;
-        }
-        else { 
-            
-            
-            
-            
-            
-            
-            //tera que realizar a busca pela memória 
-            //começa pelo Root, busca o elemento que ela está buscando, acessa tal elemento e assim por diante até chegar na posição do DEntry. 
-            //adiciona o file/directory na posição e atualiza o DEntry do diretório associado 
-        }
-
-        return 0;
-        
-    }
 
     @Override
     public boolean addFile(String pathname, String filename, FileType type, int length) throws InvalidEntryException, VirtualFileNotFoundException {

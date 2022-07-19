@@ -15,6 +15,14 @@ public class SNode{
     protected short DataBlock_03;
     protected short DataBlock_04;
 
+    protected DBlock dataBlock1;
+    protected DBlock dataBlock2;
+    protected DBlock dataBlock3;
+    protected DBlock dataBlock4;
+
+
+
+
     
     
     //construtor da classe 

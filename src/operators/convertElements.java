@@ -1,5 +1,8 @@
 package src.operators;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
 public class convertElements {
 
 
@@ -32,5 +35,17 @@ public class convertElements {
         return   (short) (value[0]<<8 | value[1] & 0xFF);
     }
 
+    public String convertByteVectorInString(byte[] string){
+        String value = new String(string, StandardCharsets.UTF_8);
+
+        return value;
+    }
+
+    
+    public byte[] convertStringInBytesVector(String string){
+       byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+
+        return bytes;
+    }
 
 }
