@@ -134,21 +134,19 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
          * 
          * 
          */
+         SNode auxSNode; 
+         DEntry auxDEntry; 
 
-         int positionFileName = 4 ; //primeira localização do FileName do root 
-         int sizeFileName = 1; //tamanho do file name 
-         byte[] fileName;
-         int SNodeIdentifierElement =(int)operator.convertByteToShort(VD.getElement(0, 2)) ; //pega o identificador do SNode associado
-         
-         
+
+
+         auxDEntry = new DEntry(VD.getElement(0, 8)); //pegamos inicialmente o DEntry do Root
+
+
+    
         for(int i = 0; i< elements.length; i++){
 
-                FileNameLength = VD.getElement(positionFileName, sizeFileName)[0]; //tamanho do nome do diretorio. Começando pela root 
-                fileName = VD.getElement(positionFileName, FileNameLength);
-
-
-            if(operator.convertByteVectorInString(fileName) == elements[i]){ //realiza a comparação entre o elemento
-
+            if(auxDEntry. == elements[i]){ //realiza a comparação entre o elemento
+                 
                 
 
             }

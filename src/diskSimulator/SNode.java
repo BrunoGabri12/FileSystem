@@ -58,7 +58,35 @@ public class SNode{
     
     }
 
-
+    public byte getFileType(){
+        return this.FileType;
+    }
+    public byte getGeneration(){
+        return this.Generation;
+    }
+    public long getCreationDate(){
+        return this.CreationDate;
+    }
+    public long getModificationDate(){
+        return this.ModificationDate;
+    }
+    public short getLenght(){
+        return this.Length;
+    }
+    public short getDataBlok1(){
+        return this.DataBlock_01;
+    }
+    public short getDataBlok2(){
+        return this.DataBlock_02;
+    }
+    public short getDataBlok3(){
+        return this.DataBlock_03;
+    }
+    public short getDataBlok4(){
+        return this.DataBlock_04;
+    }
+    
+  
     public byte[] convertSNodeInBytes(){
 
         byte[] SNodeByte = new byte[28];
@@ -118,9 +146,7 @@ public class SNode{
 
         SNodeByte[27] = shortvalue[0]; 
         SNodeByte[28] = shortvalue[1];
-        
-      
-   
+    
         
         return SNodeByte;
     }

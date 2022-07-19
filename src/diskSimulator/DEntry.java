@@ -24,12 +24,33 @@ public class DEntry {
     
     }
 
+    public short getSNodeIdentifier(){
+        return this.SNodeIdentifier;
+    }
+    public short getEntryLenght(){
+        return this.EntryLenght;
+    }
+    public byte getFileType(){
+        return this.FileType;
+    }
+    public byte getFileNameLength(){
+        return this.FileNameLength;
+    }
+    public byte[]getFileName(){
+        return this.FileName;
+    }
+
+
+
     public DEntry(byte[] DEntryElement){
 
-        this.SNodeIdentifier = 
-        
+        convertElements operator = new convertElements();
 
-
+        this.SNodeIdentifier = operator.convertByteToShort(operator.concatInArry(DEntryElement, 0, 2));
+        this.EntryLenght = operator.convertByteToShort(operator.concatInArry(DEntryElement, 2, 4));
+        this.FileType = DEntryElement[4];
+        this.FileNameLength= DEntryElement[5];
+        this.FileName = operator.concatInArry(DEntryElement, 5, DEntryElement.length);
 
     }
 
