@@ -2,7 +2,7 @@ package virtualDisk;
 //classe que representa o disco virtual, onde serão armazenadas as estruturas 
 public class virtualDisk {
     private byte[] VD; //disco virtual 
-
+    private int LastInsert = 0 ;
 
     public virtualDisk(int size) {
         this.VD = new byte[size] ;
@@ -18,9 +18,11 @@ public class virtualDisk {
 
     }
     public void insertNode(int positionI, byte element[]){
+        int i=0,j;
+
         if( positionI > 0 && (positionI+element.length<VD.length)  && element.length!=0 ){
 
-            for(int i = positionI, j=0 ;  i< (positionI+element.length) ; i++, j++ ){
+            for(i = positionI, j=0 ;  i< (positionI+element.length) ; i++, j++ ){
                 VD[i] = element[j];
             }
 
@@ -28,6 +30,8 @@ public class virtualDisk {
         else {
             System.out.println("Inserção Inválida");
         }
+
+        this.LastInsert = i;
 
     }
 
@@ -41,5 +45,9 @@ public class virtualDisk {
 
 
         return element;
+    }
+
+    public int getLastInsertPosition(){
+        return this.LastInsert;
     }
 }

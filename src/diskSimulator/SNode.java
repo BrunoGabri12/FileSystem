@@ -4,8 +4,8 @@ import src.operators.convertElements;
 public class SNode{
     // tamanho fixo de 28 bytes em disco
 
-    protected Byte FileType;
-    protected Byte Generation;
+    protected byte FileType;
+    protected byte Generation;
     protected long CreationDate;
     protected long ModificationDate;
 
@@ -16,7 +16,7 @@ public class SNode{
     protected short DataBlock_04;
 
 
-    public SNode(Byte fileType, byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){ //*construtor para diretórios */
+    public SNode(byte fileType, byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){ //*construtor para diretórios */
         this.FileType= FileType;
         this.Generation= Generation;
         this.CreationDate= CreationDate;

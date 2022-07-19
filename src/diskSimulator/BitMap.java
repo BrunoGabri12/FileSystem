@@ -16,6 +16,10 @@ public class BitMap {
         }
     }
 
+    public byte[] getBitMap(){
+        return BitMap;
+    }
+
     public boolean insertNode(int position){
 
         int validation = SearchInByteVector(position);

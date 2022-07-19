@@ -57,8 +57,18 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
     //Método que realiza a criação do Root  
     private boolean createRootDisk(){ //instanciação do root 
-        DEntry root = new DEntry((short)8, (short)6, type.get("Directory"), (byte)1, operator.convertStringInBytesVector("/"));
-        VD.insertNode(0,root.convertDEntryInBytes()); //inserção no disco do DEntry associado ao Root  
+
+        long millis = Instant.now().toEpochMilli();  //data de criação do arquivo 
+
+        DEntry rootDEntry = new DEntry((short)8, (short)6, type.get("Directory"), (byte)1, operator.convertStringInBytesVector("/"));
+        SNode root = new SNode(type.get("Directory"), (byte)0 , millis,millis,  (short) ); //adicionando um SNode associado ao root 
+        
+        VD.insertNode(0,rootDEntry.convertDEntryInBytes()); //inserção no disco do DEntry associado ao Root  
+        VD.insertNode(VD.getLastInsertPosition()+1, root.convertSNodeInBytes());
+        VD.insertNode(VD.getLastInsertPosition()+1, bitMap1.getBitMap()); //inserção do bitMap
+
+        
+
 
         return true;
     
@@ -66,7 +76,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
 
     //criação do disco 
-    private boolean createDisk(){
+    private boolean createDiskInMemoria(){
     
         if((maxFile%8 != 0 || maxDir%8 != 0) || (maxFile<size.get("MinFilePerBlocks")) || maxFile>size.get("MaxFilePerBlocks") || (maxDir<size.get("MinFilePerBlocks")) && maxDir>size.get("MaxFilePerBlocks")){ //verificação se os valores estabelecem o critério de criação S 
             return false; 
@@ -83,6 +93,7 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
         return false; 
     }
+
 
     /**
     * Metodo que adiciona nova entrada (diretorio) em um diretorio existente
