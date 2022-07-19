@@ -42,11 +42,14 @@ public class DEntry {
         element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01, DataBlock_02, DataBlock_03, DataBlock_04);
     }
 
-
-    public boolean allocatNewSNodeDir(byte FileType,byte Generation, long CreationDate, long ModificationDate, short Length, short DataBlock_01){
+    public void allocatNewSNodeDir(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){
         element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01);
     }
-    }
+    
+
+
+
+
 
     public int getSize(){
         return (int)FileNameLength+6;

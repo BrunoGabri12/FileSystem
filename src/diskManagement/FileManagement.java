@@ -18,12 +18,11 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
    
    
     private int maxFile, maxDir;
-    private virtualDisk VD;    
-  
+ 
   
     private FileType type= new FileType();
    
-    
+    private DEntry root; 
     
     
     private BitMap bitMap1;
@@ -47,6 +46,8 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         this.maxDir = maxDir;
         this.maxFile = maxFile; 
 
+        this.bitMap1= new BitMap(maxFile/8);
+        this.bitMap2 = new BitMap(maxFile/8); //instanciação dos bitmaps para a representação dos elementos 
         this.createRootDisk();
     }
 
@@ -54,10 +55,15 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
 
     //Método que realiza a criação do Root  
-    private boolean createRootDisk(){ //instanciação do root 
+    private void createRootDisk(){ //instanciação do root 
+        String fileName = "/";
+        root = new DEntry((short) 1, (short)16, type.get("Directory"), (byte) 1, fileName.getBytes());
         
-    
-        
+
+        long millis = Instant.now().toEpochMilli();
+        //como os elementos ainda estão em memória, não será necessário utilizar o endereço dos blocos. Estes serão apenas considerados quando os elementos forem persistidos na memória. Será import
+        root.allocatNewSNodeDir(type.get("Directory"),(byte) 0 ,millis, millis, (short) 1);  //alocação da root 
+        bitMap1.insertNode(1);
     
     }
 
@@ -91,18 +97,10 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
 
     }
-
-
-    //realiza a busca para a inserção de um elemento no diretório 
-    public int searchFreePositionInDisk(String pathname){
-
-    }
-
  
   
 
-            
-        
+           
 
         
   

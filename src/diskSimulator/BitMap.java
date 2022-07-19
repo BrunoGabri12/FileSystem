@@ -1,15 +1,22 @@
 package src.diskSimulator;
 public class BitMap {
     //estrutura de controle que gerencia o BitMap do virtualDisk
-    //ainda precisa pensar no caso onde aumentar o bitmap
-    //pensar na generalização de um mapa de bits 
-    private byte BitMapElement;
-    private byte[] BitMap = new byte[8];
 
-    public BitMap(byte BitMapElement){
+    private byte BitMapElement;
+    private byte[] BitMap;
+    private int sizeBitmap;
+
+
+    public BitMap(byte BitMapElement, int size){
+
+        BitMap = new byte[size];
+        this.sizeBitmap = size; 
         this.BitMapElement = BitMapElement;
         iterateByteToVetor();
         convertVetorToByte();
+    }
+
+    public BitMap(int i) {
     }
 
     public boolean insertNode(int position){
@@ -38,7 +45,7 @@ public class BitMap {
         byte maskByte = 0b00000001;
         
 
-        for(int i=0 ; i<8 ; i++){
+        for(int i=0 ; i<this.sizeBitmap; i++){
             if((maskByte & this.BitMapElement) == 1){
                 BitMap[i] = 1;
             }else {
@@ -54,7 +61,7 @@ public class BitMap {
 
         String element = ""; 
         
-        for(int i=0 ; i<8 ; i++){
+        for(int i=0 ; i<this.sizeBitmap ; i++){
             element += String.valueOf(BitMap[i]);
         }
 
