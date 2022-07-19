@@ -12,25 +12,28 @@ import virtualDisk.virtualDisk;
 //classe que implementa o gerenciador de disco 
 public class FileManagement implements FileManagementInterface,VirtualDiskInspectionInterface {
     
-    private String NameOfDisk; 
-    private LimitDictionary limits;
-
+    private String NameOfDisk;
     private FileOutputStream diskFile;
+  
+   
+   
     private int maxFile, maxDir;
     private virtualDisk VD;    
+  
+  
     private FileType type= new FileType();
    
+    
+    
+    
     private BitMap bitMap1;
     private BitMap bitMap2;
 
-    private LimitDictionary size = new LimitDictionary();
 
+
+    private LimitDictionary size = new LimitDictionary();
     private convertElements operator;
 
-    /*
-     * como não temos comando para alteração de tamanho de arquivo, os arquivos serão adicionados de forma sequencial.
-     * Na hora de removermos eles, eles apenas serão deletados do map de bits 
-     */
 
     /**Inicialização do disco virtual
      *@param NameOfDisk nome do disco 
@@ -52,9 +55,9 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
     //Método que realiza a criação do Root  
     private boolean createRootDisk(){ //instanciação do root 
-
-   
-
+        
+    
+        
     
     }
 
@@ -83,18 +86,26 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     @Override
     public boolean addDirectory(String pathname, String filename) throws InvalidEntryException, VirtualFileNotFoundException {
         long millis = Instant.now().toEpochMilli();  //data de criação do arquivo 
-        SNodeDir Directory = new SNodeDir(type.get("Directory"), (byte)0 , millis, millis, (short)0); //criação de um novo diretório 
-
-        
-        //primeiro temos que realizar uma busca para saber em que diretório será adicionado
-        //depois precisamos buscar um espaço na memória para armazenar o diretório -> irá buscar no BitMap 
+    
 
 
-        return false;
+
     }
 
 
+    //realiza a busca para a inserção de um elemento no diretório 
+    public int searchFreePositionInDisk(String pathname){
 
+    }
+
+ 
+  
+
+            
+        
+
+        
+  
 
     @Override
     public boolean addFile(String pathname, String filename, FileType type, int length) throws InvalidEntryException, VirtualFileNotFoundException {
