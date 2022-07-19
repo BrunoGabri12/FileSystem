@@ -1,69 +1,116 @@
 package src.diskSimulator;
 public class BitMap {
-    //estrutura de controle que gerencia o BitMap do virtualDisk
-    //ainda precisa pensar no caso onde aumentar o bitmap
-    //pensar na generalização de um mapa de bits 
-    private byte BitMapElement;
-    private byte[] BitMap = new byte[8];
 
-    public BitMap(byte BitMapElement){
-        this.BitMapElement = BitMapElement;
-        iterateByteToVetor();
-        convertVetorToByte();
+
+    private byte[] BitMap;
+
+
+
+
+    public BitMap(int size){
+        
+        BitMap = new byte[size];
+        
+        for(int i =0 ; i<BitMap.length;i++){
+            BitMap[i] = 0 ; //inicialização com todos os espaços disponíveis 
+        }
     }
 
     public boolean insertNode(int position){
 
-        if(BitMap[position] == 1 ){
-            return false; 
+        int validation = SearchInByteVector(position);
+
+        if(validation == 1){
+            return false;
         }
-        else {
-            BitMap[position] = 1;
-        }
-
-        return true;
-
-    }
-
-    public boolean removeNode(int position){
-        BitMap[position] = 0;
-
-
-        return true;
-    } //metodos para inserção de nodes 
-
-
-    private void iterateByteToVetor(){
-
-        byte maskByte = 0b00000001;
+        else { 
+              
+            int positionSlot;
         
-
-        for(int i=0 ; i<8 ; i++){
-            if((maskByte & this.BitMapElement) == 1){
-                BitMap[i] = 1;
-            }else {
-                BitMap[i] = 0;
+            if(position<8){
+                    positionSlot = 0;
+            }
+                
+                
+            else {
+                    positionSlot = (int)position/8; //irá pegar o slot que o elemento pertence
             }
             
-            maskByte =  (byte) (maskByte << 1);
-        }
-
+            
+            int positionElementInSlot = (int) Math.abs(positionSlot*8 - position); 
+            
+            
+             
+            byte maskByte = 0b00000001;
+            maskByte =  (byte) (maskByte << positionElementInSlot); //dá um shift na mascara
+            BitMap[positionSlot] = (byte) (maskByte | BitMap[positionSlot]);  //irá realizar operação bit a bit para adicionar que o elemento está ocupando o local 
+            
+            return true;
+            }
+    
     }
+    
 
-    private void convertVetorToByte(){
+    public boolean removeNode(int position){
 
-        String element = ""; 
+            int validation = SearchInByteVector(position);
+    
+            if(validation == 1){
+                return false;
+            }
+            else { 
+                  
+                int positionSlot;
+            
+                if(position<8){
+                        positionSlot = 0;
+                }
+                    
+                    
+                else {
+                        positionSlot = (int)position/8; //irá pegar o slot que o elemento pertence
+                }
+                
+                
+                int positionElementInSlot = (int) Math.abs(positionSlot*8 - position); 
+                
+                
+                 
+                byte maskByte = 0b00000001;
+                maskByte =  (byte) (maskByte << positionElementInSlot); //dá um shift na mascara
+                BitMap[positionSlot] = (byte) (maskByte ^ BitMap[positionSlot]);  //irá realizar operação bit a bit para adicionar que o elemento está ocupando o local 
+                
+                return true;
+                }
         
-        for(int i=0 ; i<8 ; i++){
-            element += String.valueOf(BitMap[i]);
         }
 
-        //converte string em byte 
-        BitMapElement = Byte.parseByte(element,2);
-    }
+
+    private int SearchInByteVector(int position){
+
+        
+        int positionSlot;
+       
+        if(position<8){
+            positionSlot = 0;
+        }
+        else {
+            positionSlot = (int)position/8; //irá pegar o slot que o elemento pertence 
+        }
+        
+        
+        int positionElementInSlot = (int) Math.abs(positionSlot*8 - position); 
+        
+        
+        
+        byte maskByte = 0b00000001;
+        maskByte =  (byte) (maskByte << positionElementInSlot); //dá um shift na mascara
 
 
-    public byte getBitMap() {
-        return BitMapElement;
+        return (int) maskByte & BitMap[positionSlot]; //irá retornar 0 se o espaço estiver vazio ou 1 se ele estiver ocupado 
+
+            
+
     }
+
 }

@@ -44,6 +44,11 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         this.maxDir = maxDir;
         this.maxFile = maxFile; 
 
+        VD= new virtualDisk(28*maxFile + 128*maxFile); //alocação do espaço necessário para armanezamento 
+        //28*maxfile refere-se ao SNode necessário para representar um block 
+        //128*maxFile refere-se a quantidade de blocos alocadas  
+
+
         this.createRootDisk();
     }
 
@@ -52,9 +57,10 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
 
     //Método que realiza a criação do Root  
     private boolean createRootDisk(){ //instanciação do root 
+        DEntry root = new DEntry((short)8, (short)6, type.get("Directory"), (byte)1, operator.convertStringInBytesVector("/"));
+        VD.insertNode(0,root.convertDEntryInBytes()); //inserção no disco do DEntry associado ao Root  
 
-   
-
+        return true;
     
     }
 
@@ -78,7 +84,14 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         return false; 
     }
 
-
+    /**
+    * Metodo que adiciona nova entrada (diretorio) em um diretorio existente
+    * @param pathname - caminho absoluto do diretorio alvo da operacao
+    * @param filename - identificador do novo diretorio sendo criado
+    * @return true se operacao realizada com sucesso, false se operacao nao pode ser realizada
+    * @throws InvalidEntryException - se formato de pathname ou filename for invalido ou entrada for duplicada
+    * @throws VirtualFileNotFoundException - se diretorio identificado por pathname nao for encontrado 
+   */
 
     @Override
     public boolean addDirectory(String pathname, String filename) throws InvalidEntryException, VirtualFileNotFoundException {
@@ -86,6 +99,8 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         SNodeDir Directory = new SNodeDir(type.get("Directory"), (byte)0 , millis, millis, (short)0); //criação de um novo diretório 
 
         
+
+
         //primeiro temos que realizar uma busca para saber em que diretório será adicionado
         //depois precisamos buscar um espaço na memória para armazenar o diretório -> irá buscar no BitMap 
 

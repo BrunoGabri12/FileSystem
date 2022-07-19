@@ -18,7 +18,9 @@ public class DEntry {
         this.FileName = FileName;
 
 
-        //tem que garantir essas consistencia ai parça kkk
+        if(FileName.length> 122){
+            System.out.println("Nome do elemento maior do que o máximo estipulado");
+        }
     
     }
 

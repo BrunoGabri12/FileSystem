@@ -15,14 +15,15 @@ public class SNode{
     protected short DataBlock_03;
     protected short DataBlock_04;
 
-    protected DBlock dataBlock1;
-    protected DBlock dataBlock2;
-    protected DBlock dataBlock3;
-    protected DBlock dataBlock4;
 
-
-
-
+    public SNode(Byte fileType, byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){ //*construtor para diretórios */
+        this.FileType= FileType;
+        this.Generation= Generation;
+        this.CreationDate= CreationDate;
+        this.ModificationDate= ModificationDate;
+        this.Length= (short)128;
+        this.DataBlock_01= DataBlock_01;
+    }
     
     
     //construtor da classe 
