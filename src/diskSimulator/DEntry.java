@@ -1,4 +1,6 @@
 package src.diskSimulator;
+import java.lang.annotation.ElementType;
+
 import src.operators.convertElements;
 
 public class DEntry {
@@ -8,6 +10,9 @@ public class DEntry {
     private byte FileType; 
     private byte FileNameLength;
     private byte[] FileName;
+
+
+    private  SNode element; 
 
 
     public DEntry(short SNodeIdentifier, short EntryLenght, byte FileType, byte FileNameLength, byte[] FileName) {
@@ -21,6 +26,34 @@ public class DEntry {
         //tem que garantir essas consistencia ai parça kkk
     
     }
+
+
+
+    public void allocatNewSNodeFile(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){
+        element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01);
+    }
+    public void allocatNewSNodeFile(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01, short DataBlock_02){
+        element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01, DataBlock_02);
+    }
+    public void allocatNewSNodeFile(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01, short DataBlock_02, short DataBlock_03){
+        element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01, DataBlock_02, DataBlock_03);
+    }
+    public void allocatNewSNodeFile(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01, short DataBlock_02, short DataBlock_03, short DataBlock_04){
+        element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01, DataBlock_02, DataBlock_03, DataBlock_04);
+    }
+
+
+    public boolean allocatNewSNodeDir(byte FileType,byte Generation, long CreationDate, long ModificationDate, short Length, short DataBlock_01){
+        element = new SNode(FileType, Generation, CreationDate, ModificationDate, DataBlock_01);
+    }
+    }
+
+    public int getSize(){
+        return (int)FileNameLength+6;
+    }
+   
+
+
 
     public byte[] convertDEntryInBytes(){
    

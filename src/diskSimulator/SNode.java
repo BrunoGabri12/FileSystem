@@ -15,30 +15,81 @@ public class SNode{
     protected short DataBlock_03;
     protected short DataBlock_04;
 
-    protected DBlock dataBlock1;
-    protected DBlock dataBlock2;
-    protected DBlock dataBlock3;
-    protected DBlock dataBlock4;
+    protected DBlock[] dataBlocks; 
 
-
-
-
-    
     
     //construtor da classe 
-    public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short Length, short DataBlock_01, short DataBlock_02, short DataBlock_03, short DataBlock_04){
+    public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){
         this.FileType= FileType;
         this.Generation= Generation;
         this.CreationDate= CreationDate;
         this.ModificationDate= ModificationDate;
-        this.Length= Length;
-        this.DataBlock_01= DataBlock_01;
-        this.DataBlock_02= DataBlock_02;
-        this.DataBlock_03= DataBlock_03; 
-        this.DataBlock_04= DataBlock_04;
+        this.Length= 128;
+      
+        
+        this.DataBlock_01 = DataBlock_01;    
+        this.DataBlock_02 = -1;
+        this.DataBlock_03 = -1;
+        this.DataBlock_04 = -1;
+        
+        dataBlocks = new DBlock[1];
+    }
+
+
+    public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01,short DataBlock_02){
+        this.FileType= FileType;
+        this.Generation= Generation;
+        this.CreationDate= CreationDate;
+        this.ModificationDate= ModificationDate;
+        this.Length= 256;
+      
+        
+        this.DataBlock_01 = DataBlock_01;    
+        this.DataBlock_02 = DataBlock_02;
+        this.DataBlock_03 = -1;
+        this.DataBlock_04 = -1;
+    
+        dataBlocks = new DBlock[2];
+    }
+
+
+    public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01,short DataBlock_02,short DataBlock_03){
+        this.FileType= FileType;
+        this.Generation= Generation;
+        this.CreationDate= CreationDate;
+        this.ModificationDate= ModificationDate;
+        this.Length= 384;
+      
+        
+        this.DataBlock_01 = DataBlock_01;    
+        this.DataBlock_02 = DataBlock_02;
+        this.DataBlock_03 = DataBlock_03;
+        this.DataBlock_04 = -1;
+    
+        dataBlocks = new DBlock[3];
+    }
+
 
     
+    public SNode(byte FileType,byte Generation, long CreationDate, long ModificationDate, short DataBlock_01,short DataBlock_02,short DataBlock_03,short DataBlock_04){
+        this.FileType= FileType;
+        this.Generation= Generation;
+        this.CreationDate= CreationDate;
+        this.ModificationDate= ModificationDate;
+        this.Length= 512;
+      
+        
+        this.DataBlock_01 = DataBlock_01;    
+        this.DataBlock_02 = DataBlock_02;
+        this.DataBlock_03 = DataBlock_03;
+        this.DataBlock_04 = DataBlock_04;
+    
+        dataBlocks = new DBlock[4];
+
     }
+
+
+    
 
 
     public byte[] convertSNodeInBytes(){
