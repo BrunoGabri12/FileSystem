@@ -20,8 +20,8 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     private virtualDisk VD;    
     private FileType type= new FileType();
    
-    private BitMap bitMap1;
-    private BitMap bitMap2;
+    private BitMap bitMapBlocks;
+    private BitMap bitMapSNode;
 
     private LimitDictionary size = new LimitDictionary();
 
@@ -61,13 +61,13 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
         long millis = Instant.now().toEpochMilli();  //data de criação do arquivo 
 
         DEntry rootDEntry = new DEntry((short)8, (short)6, type.get("Directory"), (byte)1, operator.convertStringInBytesVector("/"));
-        SNode root = new SNode(type.get("Directory"), (byte)0 , millis,millis,  (short) ); //adicionando um SNode associado ao root 
+        SNode root = new SNode(type.get("Directory"), (byte)0 , millis,millis,  (short) (bitMap1.gitSizeBitMap() + 36)); //adicionando um SNode associado ao root 
         
-        VD.insertNode(0,rootDEntry.convertDEntryInBytes()); //inserção no disco do DEntry associado ao Root  
-        VD.insertNode(VD.getLastInsertPosition()+1, root.convertSNodeInBytes());
-        VD.insertNode(VD.getLastInsertPosition()+1, bitMap1.getBitMap()); //inserção do bitMap
+        VD.insertNode(0,rootDEntry.convertDEntryInBytes()); //inserção no disco virtual do DEntry associado ao Root  
+        VD.insertNode(VD.getLastInsertPosition()+1, root.convertSNodeInBytes()); //todos elementos será deslocados 8bits para frente, pois os primeiros 8bits são do DEntry do root 
 
-        
+        bitMapBlocks.insertNode(0); //insere posição do Bloco da Root 
+
 
 
         return true;
@@ -107,18 +107,62 @@ public class FileManagement implements FileManagementInterface,VirtualDiskInspec
     @Override
     public boolean addDirectory(String pathname, String filename) throws InvalidEntryException, VirtualFileNotFoundException {
         long millis = Instant.now().toEpochMilli();  //data de criação do arquivo 
-        SNodeDir Directory = new SNodeDir(type.get("Directory"), (byte)0 , millis, millis, (short)0); //criação de um novo diretório 
+        SNode Directory = new SNode(type.get("Directory"), (byte)0 , millis, millis, (short)0); //criação de um novo diretório 
 
         
 
 
-        //primeiro temos que realizar uma busca para saber em que diretório será adicionado
-        //depois precisamos buscar um espaço na memória para armazenar o diretório -> irá buscar no BitMap 
-
-
+    
         return false;
     }
 
+    private short searchInPath(String pathname){
+        separator separatorOfPath = new separator(pathname);
+        String[] elements = separatorOfPath.get(); //retorna o vetor do caminho
+
+
+        //caso seja o root, retorna o endereço do DEntry do root 
+        int FileNameLength;
+
+        /*
+         * compara o elements como FileName do entry, caso seja falso. expeção 
+         * caso verdadeiro, pega o endereço do SNodeIdentifier. Dentro do SNodeIdentifier
+         * Ir para SNode, realizar a busca no DataBlock associado. Caso não encontrado, 
+         * exceção 
+         * 
+         * Caso encontrado, ir para o SNodeIdentifier, até encontrar a posição desejada 
+         * 
+         * 
+         */
+
+         int positionFileName = 4 ; //primeira localização do FileName do root 
+         int sizeFileName = 1; //tamanho do file name 
+         byte[] fileName;
+         int SNodeIdentifierElement =(int)operator.convertByteToShort(VD.getElement(0, 2)) ; //pega o identificador do SNode associado
+         
+         
+        for(int i = 0; i< elements.length; i++){
+
+                FileNameLength = VD.getElement(positionFileName, sizeFileName)[0]; //tamanho do nome do diretorio. Começando pela root 
+                fileName = VD.getElement(positionFileName, FileNameLength);
+
+
+            if(operator.convertByteVectorInString(fileName) == elements[i]){ //realiza a comparação entre o elemento
+
+                
+
+            }
+            else { 
+                 
+            }
+
+
+        }
+
+        //irá retornar a posição na memória 
+
+
+    }
 
 
 

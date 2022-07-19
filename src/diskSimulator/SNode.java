@@ -16,6 +16,23 @@ public class SNode{
     protected short DataBlock_04;
 
 
+
+    public SNode(byte[] SNodeInVirtualDisk){
+        
+        convertElements operator = new convertElements(); 
+
+
+        this.FileType = SNodeInVirtualDisk[0];
+        this.Generation = SNodeInVirtualDisk[1];
+        this.CreationDate = operator.convertByteToLong(operator.concatInArry(SNodeInVirtualDisk, 2, 10));
+        this.ModificationDate = operator.convertByteToLong(operator.concatInArry(SNodeInVirtualDisk, 10, 18));
+        this.Length = operator.convertByteToShort(operator.concatInArry(SNodeInVirtualDisk, 18, 20));
+        this.DataBlock_01 = operator.convertByteToShort(operator.concatInArry(SNodeInVirtualDisk, 20, 22));
+        this.DataBlock_02 = operator.convertByteToShort(operator.concatInArry(SNodeInVirtualDisk, 22, 24));
+        this.DataBlock_03 = operator.convertByteToShort(operator.concatInArry(SNodeInVirtualDisk, 24, 26));
+        this.DataBlock_03 = operator.convertByteToShort(operator.concatInArry(SNodeInVirtualDisk, 26, 28));
+    }
+
     public SNode(byte fileType, byte Generation, long CreationDate, long ModificationDate, short DataBlock_01){ //*construtor para diretórios */
         this.FileType= FileType;
         this.Generation= Generation;

@@ -19,6 +19,9 @@ public class BitMap {
     public byte[] getBitMap(){
         return BitMap;
     }
+    public int gitSizeBitMap(){
+        return BitMap.length;
+    }
 
     public boolean insertNode(int position){
 

@@ -13,7 +13,7 @@ public class separator {
 
     }
 
-    String[] get(){
+    public String[] get(){
 
         return pathnames;
     }

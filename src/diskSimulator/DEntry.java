@@ -24,6 +24,15 @@ public class DEntry {
     
     }
 
+    public DEntry(byte[] DEntryElement){
+
+        this.SNodeIdentifier = 
+        
+
+
+
+    }
+
     public byte[] convertDEntryInBytes(){
    
         

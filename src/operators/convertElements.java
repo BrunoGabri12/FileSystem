@@ -30,13 +30,38 @@ public class convertElements {
           return valueinByte;
     }
 
+    public byte[] concatInArry(byte[] arryInit, int initpos,int finalpos){
+        byte[] finalArray = new byte[finalpos-initpos];
+        
+        for(int i = initpos,j=0; i<finalpos; i++,j++){
+            finalArray[j] = arryInit[i]; 
+        }
+
+        return finalArray;
+        
+    }
+
+    public long convertByteToLong(byte[] longvalue){
+        long value=0; 
+
+        for (byte b : longvalue) {
+            // Shifting previous value 8 bits to right and
+            // add it with next value
+            value = (value << 8) + (b & 255);
+        }
+ 
+        return value;
+
+    
+    }
+
     public short convertByteToShort(byte[] value){
 
         return   (short) (value[0]<<8 | value[1] & 0xFF);
     }
 
-    public String convertByteVectorInString(byte[] string){
-        String value = new String(string, StandardCharsets.UTF_8);
+    public String convertByteVectorInString(byte[] bytesvector){
+        String value = new String(bytesvector, StandardCharsets.UTF_8);
 
         return value;
     }
